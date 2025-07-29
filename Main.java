@@ -2533,22 +2533,45 @@ import java.util.Scanner;
 import java.util.*;
 
 import java.util.*;
-public class Main{
-    public static void main(String srgs[]){
-        Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();
-        while(t-- > 0){
-            String a = sc.next();
-            String b= sc.next();
-            String c = sc.next();
-            char ch1 = a.charAt(0);
-            char ch2 = b.charAt(0);
-            char ch3 = c.charAt(0);
-            String s = "";
-            s+=ch1;
-            s+=ch2;
-            s+=ch3;
-            System.out.println(s);
-        }
-    }
-}
+//public class Main{
+//    public static void main(String srgs[]){
+//        Scanner sc = new Scanner(System.in);
+//        int t = sc.nextInt();
+//        while(t-- > 0){
+//            String a = sc.next();
+//            String b= sc.next();
+//            String c = sc.next();
+//            char ch1 = a.charAt(0);
+//            char ch2 = b.charAt(0);
+//            char ch3 = c.charAt(0);
+//            String s = "";
+//            s+=ch1;
+//            s+=ch2;
+//            s+=ch3;
+//            System.out.println(s);
+//        }
+//    }
+//}
+
+//import java.util.*;
+//public class Main{
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int n = sc.nextInt();
+//        int count =0;
+//        if((n&(n-1))==0) {
+//            System.out.println(1);
+//            return;
+//        }
+//        else{
+//            while(n!=0){
+//                int k = n%2;
+//                count+=k;
+//                n/=2;
+//            }
+//        }
+//        System.out.println(count);
+//    }
+//}
+
+

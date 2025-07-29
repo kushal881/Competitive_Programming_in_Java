@@ -12,7 +12,6 @@ public class AKeyboard {
 
         for (char ch : typed.toCharArray()) {
             int idx = keyboard.indexOf(ch);
-
             if (direction == 'R') {
                 original.append(keyboard.charAt(idx - 1));
             } else {
