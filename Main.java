@@ -2573,3 +2573,128 @@ import java.util.*;
 //        System.out.println(count);
 //    }
 //}
+
+
+//
+//import java.io.*;
+//import java.util.*;
+//
+//public class Main{
+//    public static int precedence(char op) {
+//        switch (op) {
+//            case '+':
+//            case '-': return 1;
+//            case '*':
+//            case '/': return 2;
+//        }
+//        return -1;
+//    }
+//
+//    public static String convertToPostfix(List<Character> tokens) {
+//        StringBuilder postfix = new StringBuilder();
+//        Stack<Character> stack = new Stack<>();
+//        for (char token : tokens) {
+//            if (Character.isDigit(token)) {
+//                postfix.append(token);
+//            } else if (token == '(') {
+//                stack.push(token);
+//            } else if (token == ')') {
+//                while (!stack.isEmpty() && stack.peek() != '(') {
+//                    postfix.append(stack.pop());
+//                }
+//                if (!stack.isEmpty() && stack.peek() == '(') {
+//                    stack.pop();
+//                }
+//            } else {
+//                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(token)) {
+//                    postfix.append(stack.pop());
+//                }
+//                stack.push(token);
+//            }
+//        }
+//        while (!stack.isEmpty()) {
+//            postfix.append(stack.pop());
+//        }
+//        return postfix.toString();
+//    }
+//
+//    public static void main(String[] args) throws IOException {
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        int testCases = Integer.parseInt(br.readLine().trim());
+//        for (int t = 0; t < testCases; t++) {
+//            br.readLine();
+//            List<Character> tokens = new ArrayList<>();
+//            String line;
+//            while ((line = br.readLine()) != null && !line.trim().isEmpty()) {
+//                tokens.add(line.trim().charAt(0));
+//            }
+//            String postfix = convertToPostfix(tokens);
+//            System.out.println(postfix);
+//            if (t != testCases - 1) {
+//                System.out.println();
+//            }
+//        }
+//    }
+//}
+
+
+//import java.io.*;
+//import java.util.*;
+//
+//public class Main {
+//    public static boolean isBalanced(String s) {
+//        Stack<Character> stack = new Stack<>();
+//        for (char ch : s.toCharArray()) {
+//            if (ch == '(' || ch == '[') {
+//                stack.push(ch);
+//            } else if (ch == ')') {
+//                if (stack.isEmpty() || stack.pop() != '(') return false;
+//            } else if (ch == ']') {
+//                if (stack.isEmpty() || stack.pop() != '[') return false;
+//            }
+//        }
+//        return stack.isEmpty();
+//    }
+//
+//    public static void main(String[] args) throws IOException {
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        int n = Integer.parseInt(br.readLine().trim());
+//        for (int i = 0; i < n; i++) {
+//            String str = br.readLine().trim();
+//            if (isBalanced(str)) {
+//                System.out.println("Yes");
+//            } else {
+//                System.out.println("No");
+//            }
+//        }
+//    }
+//}
+
+
+import java.util.*;
+
+public class Main{
+    public static boolean isBalanced(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char ch : s.toCharArray()) {
+            if (ch == '(' || ch == '[') {
+                stack.push(ch);
+            } else if (ch == ')') {
+                if (stack.isEmpty() || stack.pop() != '(') return false;
+            } else if (ch == ']') {
+                if (stack.isEmpty() || stack.pop() != '[') return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = Integer.parseInt(sc.nextLine().trim());
+        for (int i = 0; i < n; i++) {
+            String str = sc.nextLine().trim();
+            System.out.println(isBalanced(str) ? "Yes" : "No");
+        }
+        sc.close();
+    }
+}
