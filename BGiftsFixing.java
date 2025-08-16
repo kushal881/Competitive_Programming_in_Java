@@ -22,7 +22,6 @@ public class BGiftsFixing {
                 long db = b[i] - minB;
                 moves += Math.max(da, db);
             }
-
             System.out.println(moves);
         }
     }
