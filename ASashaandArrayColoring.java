@@ -15,7 +15,6 @@ public class ASashaandArrayColoring {
             for (int i = 0; i < n / 2; i++) {
                 cost += a[n - 1 - i] - a[i];
             }
-
             System.out.println(cost);
         }
     }
