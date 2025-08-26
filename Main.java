@@ -3293,146 +3293,149 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
+
+
+
+//import java.util.HashSet;
+//import java.util.Scanner;
+//import java.util.Set;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        int t = scanner.nextInt();
+//        while (t-- > 0) {
+//            int n = scanner.nextInt();
+//            Set<Integer> distinctGears = new HashSet<>();
+//            boolean foundDuplicate = false;
+//            for (int i = 0; i < n; i++) {
+//                int teeth = scanner.nextInt();
+//                if (!distinctGears.add(teeth)) {
+//                    foundDuplicate = true;
+//                }
+//            }
+//            if (foundDuplicate) {
+//                System.out.println("YES");
+//            } else {
+//                System.out.println("NO");
+//            }
+//        }
+//    }
+//}
+
+
+
+
+
+
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    static class Complex {
-        double re, im;
-        public Complex(double re, double im) { this.re = re; this.im = im; }
-        Complex add(Complex b) { return new Complex(re + b.re, im + b.im); }
-        Complex sub(Complex b) { return new Complex(re - b.re, im - b.im); }
-        Complex mul(Complex b) { return new Complex(re * b.re - im * b.im, re * b.im + im * b.re); }
-    }
-
-    static void fft(Complex[] a, boolean invert) {
-        int n = a.length;
-        for (int i = 1, j = 0; i < n; i++) {
-            int bit = n >> 1;
-            for (; (j & bit) != 0; bit >>= 1) j ^= bit;
-            j ^= bit;
-            if (i < j) {
-                Complex temp = a[i]; a[i] = a[j]; a[j] = temp;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter pw = new PrintWriter(System.out);
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            List<List<Integer>> adj = new ArrayList<>();
+            for (int i = 0; i <= n; i++) {
+                adj.add(new ArrayList<>());
             }
-        }
-        for (int len = 2; len <= n; len <<= 1) {
-            double ang = 2 * Math.PI / len * (invert ? -1 : 1);
-            Complex wlen = new Complex(Math.cos(ang), Math.sin(ang));
-            for (int i = 0; i < n; i += len) {
-                Complex w = new Complex(1, 0);
-                for (int j = 0; j < len / 2; j++) {
-                    Complex u = a[i + j], v = a[i + j + len / 2].mul(w);
-                    a[i + j] = u.add(v);
-                    a[i + j + len / 2] = u.sub(v);
-                    w = w.mul(wlen);
+            for (int i = 0; i < n - 1; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                int u = Integer.parseInt(st.nextToken());
+                int v = Integer.parseInt(st.nextToken());
+                adj.get(u).add(v);
+                adj.get(v).add(u);
+            }
+
+            if (n == 2) {
+                pw.println(2);
+                pw.println("1 1");
+                pw.println("1 2");
+                continue;
+            }
+            if (n == 3) {
+                int root = -1;
+                for(int i=1; i<=n; ++i) {
+                    if (adj.get(i).size() > 1) {
+                        root = i;
+                        break;
+                    }
                 }
+                if (root == -1) root = 1; // Path graph case
+
+                List<Integer> leaves = new ArrayList<>();
+                for(int i=1; i<=n; ++i) {
+                    if (i != root) {
+                        leaves.add(i);
+                    }
+                }
+                pw.println(3);
+                pw.println("1 " + leaves.get(0));
+                pw.println("1 " + leaves.get(1));
+                pw.println("1 " + root);
+                continue;
             }
-        }
-        if (invert) for (Complex x : a) { x.re /= n; x.im /= n; }
-    }
 
-    static long[][] multiply(boolean[][] g1, boolean[][] g2, int n, int m) {
-        int fn = 1, fm = 1;
-        while (fn < n) fn <<= 1;
-        while (fm < m) fm <<= 1;
 
-        Complex[][] a = new Complex[fn][fm], b = new Complex[fn][fm];
-        for (int i = 0; i < fn; i++) for (int j = 0; j < fm; j++) {
-            a[i][j] = new Complex(0, 0); b[i][j] = new Complex(0, 0);
-        }
-        for (int i = 0; i < g1.length; i++) for (int j = 0; j < g1[0].length; j++) if (g1[i][j]) a[i][j].re = 1;
-        for (int i = 0; i < g2.length; i++) for (int j = 0; j < g2[0].length; j++) if (g2[i][j]) b[i][j].re = 1;
+            int[] color = new int[n + 1];
+            List<Integer> color0 = new ArrayList<>();
+            List<Integer> color1 = new ArrayList<>();
 
-        for (int i = 0; i < fn; i++) { fft(a[i], false); fft(b[i], false); }
-        Complex[] col_a = new Complex[fn], col_b = new Complex[fn];
-        for (int j = 0; j < fm; j++) {
-            for (int i = 0; i < fn; i++) { col_a[i] = a[i][j]; col_b[i] = b[i][j]; }
-            fft(col_a, false); fft(col_b, false);
-            for (int i = 0; i < fn; i++) { a[i][j] = col_a[i]; b[i][j] = col_b[i]; }
-        }
+            int[] q = new int[n];
+            int head = 0, tail = 0;
 
-        Complex[][] c = new Complex[fn][fm];
-        for (int i = 0; i < fn; i++) for (int j = 0; j < fm; j++) c[i][j] = a[i][j].mul(b[i][j]);
+            q[tail++] = 1;
+            color[1] = 0;
+            boolean[] visited = new boolean[n+1];
+            visited[1] = true;
 
-        for (int i = 0; i < fn; i++) fft(c[i], true);
-        Complex[] col_c = new Complex[fn];
-        for (int j = 0; j < fm; j++) {
-            for (int i = 0; i < fn; i++) col_c[i] = c[i][j];
-            fft(col_c, true);
-            for (int i = 0; i < fn; i++) c[i][j] = col_c[i];
-        }
+            while(head < tail){
+                int u = q[head++];
+                if(color[u] == 0) color0.add(u);
+                else color1.add(u);
 
-        long[][] res = new long[n][m];
-        for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) res[i][j] = Math.round(c[i][j].re);
-        return res;
-    }
-
-    private static void solve(FastReader sc, PrintWriter out) {
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-        char[][] grid = new char[n][];
-        for (int i = 0; i < n; i++) grid[i] = sc.next().toCharArray();
-
-        boolean[][][] pos = new boolean[26][n][m];
-        boolean[] present = new boolean[26];
-        for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) {
-            int c = grid[i][j] - 'a';
-            pos[c][i][j] = true;
-            present[c] = true;
-        }
-
-        boolean[][] forbidden = new boolean[2 * n - 1][2 * m - 1];
-        for (int c1 = 0; c1 < 26; c1++) {
-            if (!present[c1]) continue;
-            for (int c2 = c1 + 1; c2 < 26; c2++) {
-                if (!present[c2]) continue;
-                long[][] conv = multiply(pos[c1], pos[c2], 2 * n - 1, 2 * m - 1);
-                for (int i = 0; i < 2 * n - 1; i++) {
-                    for (int j = 0; j < 2 * m - 1; j++) {
-                        if (conv[i][j] > 0) forbidden[i][j] = true;
+                for(int v : adj.get(u)){
+                    if(!visited[v]){
+                        visited[v] = true;
+                        color[v] = 1 - color[u];
+                        q[tail++] = v;
                     }
                 }
             }
-        }
 
-        long minAdded = Long.MAX_VALUE;
-        for (int si = 0; si < 2 * n - 1; si++) {
-            for (int sj = 0; sj < 2 * m - 1; sj++) {
-                if (!forbidden[si][sj]) {
-                    long newN = n + Math.abs(si - (n - 1));
-                    long newM = m + Math.abs(sj - (m - 1));
-                    minAdded = Math.min(minAdded, newN * newM - (long) n * m);
+
+            List<Integer> smallerSet = (color0.size() < color1.size()) ? color0 : color1;
+            List<Integer> largerSet = (color0.size() < color1.size()) ? color1 : color0;
+
+            // For n >=4, pick the center of a star or a node and isolate it.
+            // This works in n+1 operations. n+1 <= 5/4 n -> 1 <= n/4 -> n>=4
+            int centerNode = 1; // Arbitrarily pick 1 as the node to clear around
+
+            List<String> ops = new ArrayList<>();
+            ops.add("1 " + centerNode);
+            ops.add("2 " + centerNode);
+            for (int i = 1; i <= n; i++) {
+                if (i != centerNode) {
+                    ops.add("1 " + i);
                 }
             }
-        }
-        out.println(minAdded);
-    }
 
-    public static void main(String[] args) {
-        FastReader sc = new FastReader();
-        PrintWriter out = new PrintWriter(System.out);
-        int t = sc.nextInt();
-        while (t-- > 0) {
-            solve(sc, out);
-        }
-        out.flush();
-    }
-
-    static class FastReader {
-        BufferedReader br;
-        StringTokenizer st;
-        public FastReader() { br = new BufferedReader(new InputStreamReader(System.in)); }
-        String next() {
-            while (st == null || !st.hasMoreElements()) {
-                try { st = new StringTokenizer(br.readLine()); }
-                catch (IOException e) { e.printStackTrace(); }
+            pw.println(ops.size());
+            for (String op : ops) {
+                pw.println(op);
             }
-            return st.nextToken();
         }
-        int nextInt() { return Integer.parseInt(next()); }
+        pw.flush();
     }
 }
-
-
