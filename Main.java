@@ -3331,111 +3331,136 @@ import java.io.PrintWriter;
 
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.io.PrintWriter;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.StringTokenizer;
+//
+//public class Main {
+//    public static void main(String[] args) throws IOException {
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        PrintWriter pw = new PrintWriter(System.out);
+//        int t = Integer.parseInt(br.readLine());
+//        while (t-- > 0) {
+//            int n = Integer.parseInt(br.readLine());
+//            List<List<Integer>> adj = new ArrayList<>();
+//            for (int i = 0; i <= n; i++) {
+//                adj.add(new ArrayList<>());
+//            }
+//            for (int i = 0; i < n - 1; i++) {
+//                StringTokenizer st = new StringTokenizer(br.readLine());
+//                int u = Integer.parseInt(st.nextToken());
+//                int v = Integer.parseInt(st.nextToken());
+//                adj.get(u).add(v);
+//                adj.get(v).add(u);
+//            }
+//
+//            if (n == 2) {
+//                pw.println(2);
+//                pw.println("1 1");
+//                pw.println("1 2");
+//                continue;
+//            }
+//            if (n == 3) {
+//                int root = -1;
+//                for(int i=1; i<=n; ++i) {
+//                    if (adj.get(i).size() > 1) {
+//                        root = i;
+//                        break;
+//                    }
+//                }
+//                if (root == -1) root = 1; // Path graph case
+//
+//                List<Integer> leaves = new ArrayList<>();
+//                for(int i=1; i<=n; ++i) {
+//                    if (i != root) {
+//                        leaves.add(i);
+//                    }
+//                }
+//                pw.println(3);
+//                pw.println("1 " + leaves.get(0));
+//                pw.println("1 " + leaves.get(1));
+//                pw.println("1 " + root);
+//                continue;
+//            }
+//
+//
+//            int[] color = new int[n + 1];
+//            List<Integer> color0 = new ArrayList<>();
+//            List<Integer> color1 = new ArrayList<>();
+//
+//            int[] q = new int[n];
+//            int head = 0, tail = 0;
+//
+//            q[tail++] = 1;
+//            color[1] = 0;
+//            boolean[] visited = new boolean[n+1];
+//            visited[1] = true;
+//
+//            while(head < tail){
+//                int u = q[head++];
+//                if(color[u] == 0) color0.add(u);
+//                else color1.add(u);
+//
+//                for(int v : adj.get(u)){
+//                    if(!visited[v]){
+//                        visited[v] = true;
+//                        color[v] = 1 - color[u];
+//                        q[tail++] = v;
+//                    }
+//                }
+//            }
+//
+//
+//            List<Integer> smallerSet = (color0.size() < color1.size()) ? color0 : color1;
+//            List<Integer> largerSet = (color0.size() < color1.size()) ? color1 : color0;
+//
+//            // For n >=4, pick the center of a star or a node and isolate it.
+//            // This works in n+1 operations. n+1 <= 5/4 n -> 1 <= n/4 -> n>=4
+//            int centerNode = 1; // Arbitrarily pick 1 as the node to clear around
+//
+//            List<String> ops = new ArrayList<>();
+//            ops.add("1 " + centerNode);
+//            ops.add("2 " + centerNode);
+//            for (int i = 1; i <= n; i++) {
+//                if (i != centerNode) {
+//                    ops.add("1 " + i);
+//                }
+//            }
+//
+//            pw.println(ops.size());
+//            for (String op : ops) {
+//                pw.println(op);
+//            }
+//        }
+//        pw.flush();
+//    }
+//}
 
+
+
+import java.util.*;
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter pw = new PrintWriter(System.out);
-        int t = Integer.parseInt(br.readLine());
-        while (t-- > 0) {
-            int n = Integer.parseInt(br.readLine());
-            List<List<Integer>> adj = new ArrayList<>();
-            for (int i = 0; i <= n; i++) {
-                adj.add(new ArrayList<>());
-            }
-            for (int i = 0; i < n - 1; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
-                int u = Integer.parseInt(st.nextToken());
-                int v = Integer.parseInt(st.nextToken());
-                adj.get(u).add(v);
-                adj.get(v).add(u);
-            }
-
-            if (n == 2) {
-                pw.println(2);
-                pw.println("1 1");
-                pw.println("1 2");
-                continue;
-            }
-            if (n == 3) {
-                int root = -1;
-                for(int i=1; i<=n; ++i) {
-                    if (adj.get(i).size() > 1) {
-                        root = i;
-                        break;
-                    }
+    public static void bubbleSort(int[] arr, int n) {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
-                if (root == -1) root = 1; // Path graph case
-
-                List<Integer> leaves = new ArrayList<>();
-                for(int i=1; i<=n; ++i) {
-                    if (i != root) {
-                        leaves.add(i);
-                    }
-                }
-                pw.println(3);
-                pw.println("1 " + leaves.get(0));
-                pw.println("1 " + leaves.get(1));
-                pw.println("1 " + root);
-                continue;
-            }
-
-
-            int[] color = new int[n + 1];
-            List<Integer> color0 = new ArrayList<>();
-            List<Integer> color1 = new ArrayList<>();
-
-            int[] q = new int[n];
-            int head = 0, tail = 0;
-
-            q[tail++] = 1;
-            color[1] = 0;
-            boolean[] visited = new boolean[n+1];
-            visited[1] = true;
-
-            while(head < tail){
-                int u = q[head++];
-                if(color[u] == 0) color0.add(u);
-                else color1.add(u);
-
-                for(int v : adj.get(u)){
-                    if(!visited[v]){
-                        visited[v] = true;
-                        color[v] = 1 - color[u];
-                        q[tail++] = v;
-                    }
-                }
-            }
-
-
-            List<Integer> smallerSet = (color0.size() < color1.size()) ? color0 : color1;
-            List<Integer> largerSet = (color0.size() < color1.size()) ? color1 : color0;
-
-            // For n >=4, pick the center of a star or a node and isolate it.
-            // This works in n+1 operations. n+1 <= 5/4 n -> 1 <= n/4 -> n>=4
-            int centerNode = 1; // Arbitrarily pick 1 as the node to clear around
-
-            List<String> ops = new ArrayList<>();
-            ops.add("1 " + centerNode);
-            ops.add("2 " + centerNode);
-            for (int i = 1; i <= n; i++) {
-                if (i != centerNode) {
-                    ops.add("1 " + i);
-                }
-            }
-
-            pw.println(ops.size());
-            for (String op : ops) {
-                pw.println(op);
             }
         }
-        pw.flush();
     }
+        public static void main (String[]args){
+            Scanner sc = new Scanner(System.in);
+            int n = sc.nextInt();
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+            bubbleSort(arr, n);
+            for (int i = 0; i < n; i++) System.out.print(arr[i] + " ");
+        }
 }
