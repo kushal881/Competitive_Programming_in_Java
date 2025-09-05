@@ -8,7 +8,6 @@ public class ADominoDisaster{
             solve(sc);
         }
     }
-
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
         String s = sc.next();
