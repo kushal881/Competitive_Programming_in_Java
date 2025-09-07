@@ -3442,25 +3442,589 @@ import java.io.PrintWriter;
 
 
 
-import java.util.*;
+//import java.util.*;
+//public class Main {
+//    public static void bubbleSort(int[] arr, int n) {
+//        for (int i = 0; i < n - 1; i++) {
+//            for (int j = 0; j < n - 1 - i; j++) {
+//                if (arr[j] > arr[j + 1]) {
+//                    int temp = arr[j];
+//                    arr[j] = arr[j + 1];
+//                    arr[j + 1] = temp;
+//                }
+//            }
+//        }
+//    }
+//        public static void main (String[]args){
+//            Scanner sc = new Scanner(System.in);
+//            int n = sc.nextInt();
+//            int[] arr = new int[n];
+//            for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+//            bubbleSort(arr, n);
+//            for (int i = 0; i < n; i++) System.out.print(arr[i] + " ");
+//        }
+//}
+
+
+
+//import java.util.Scanner;
+//import java.io.PrintWriter;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        PrintWriter out = new PrintWriter(System.out);
+//        int t = sc.nextInt();
+//        while (t-- > 0) {
+//            int n = sc.nextInt();
+//            int[] p = new int[n];
+//            for (int i = 0; i < n; i++) {
+//                p[i] = sc.nextInt();
+//            }
+//
+//            for (int i = 0; i < n; i++) {
+//                out.print((n + 1 - p[i]) + (i == n - 1 ? "" : " "));
+//            }
+//            out.println();
+//        }
+//        sc.close();
+//        out.flush();
+//    }
+//}
+
+
+
+//import java.util.Scanner;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int t = sc.nextInt();
+//        while (t-- > 0) {
+//            long a = sc.nextLong();
+//            long b = sc.nextLong();
+//
+//            if (a % 2 != 0 && b % 2 != 0) {
+//                System.out.println(a * b + 1);
+//            } else if (a % 2 == 0 && b % 2 != 0) {
+//                System.out.println(-1);
+//            } else if (a % 2 != 0 && b % 2 == 0) {
+//                if (b % 4 != 0) {
+//                    System.out.println(-1);
+//                } else {
+//                    System.out.println(Math.max(2 * a + b / 2, a * (b / 2) + 2));
+//                }
+//            } else {
+//                System.out.println(Math.max(a + b, a * (b / 2) + 2));
+//            }
+//        }
+//    }
+//}
+
+
+
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Scanner;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int t = sc.nextInt();
+//        StringBuilder outputBuilder = new StringBuilder();
+//
+//        while (t-- > 0) {
+//            int n = sc.nextInt();
+//
+//            List<Integer>[] groups = new ArrayList[n + 1];
+//            for (int i = 0; i <= n; i++) {
+//                groups[i] = new ArrayList<>();
+//            }
+//
+//            for (int i = 0; i < n; i++) {
+//                int bValue = sc.nextInt();
+//                groups[bValue].add(i);
+//            }
+//
+//            boolean possible = true;
+//            for (int k = 1; k <= n; k++) {
+//                if (groups[k].size() % k != 0) {
+//                    possible = false;
+//                    break;
+//                }
+//            }
+//
+//            if (!possible) {
+//                outputBuilder.append(-1).append("\n");
+//                continue;
+//            }
+//
+//            int[] a = new int[n];
+//            int valueToAssign = 1;
+//
+//            for (int k = 1; k <= n; k++) {
+//                List<Integer> indices = groups[k];
+//                for (int i = 0; i < indices.size(); i += k) {
+//                    for (int j = 0; j < k; j++) {
+//                        int originalIndex = indices.get(i + j);
+//                        a[originalIndex] = valueToAssign;
+//                    }
+//                    valueToAssign++;
+//                }
+//            }
+//
+//            for (int i = 0; i < n; i++) {
+//                outputBuilder.append(a[i]).append(i == n - 1 ? "" : " ");
+//            }
+//            outputBuilder.append("\n");
+//        }
+//
+//        System.out.print(outputBuilder.toString());
+//    }
+//}
+
+
+
+
+//import java.util.Arrays;
+//import java.util.Scanner;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int t = sc.nextInt();
+//        StringBuilder sb = new StringBuilder();
+//        while (t-- > 0) {
+//            int n = sc.nextInt();
+//            long k = sc.nextLong();
+//            int[] a = new int[n];
+//            long initialSum = 0;
+//            for (int i = 0; i < n; i++) {
+//                a[i] = sc.nextInt();
+//                initialSum += a[i];
+//            }
+//
+//            boolean[] seen = new boolean[n];
+//            boolean isPermutation = (a.length == n);
+//            if (isPermutation) {
+//                for (int x : a) {
+//                    if (x >= n || seen[x]) {
+//                        isPermutation = false;
+//                        break;
+//                    }
+//                    seen[x] = true;
+//                }
+//            }
+//
+//            if (isPermutation) {
+//                long sum = (long) n * (n - 1) / 2;
+//                sb.append(sum).append("\n");
+//                continue;
+//            }
+//
+//            if (k == 0) {
+//                sb.append(initialSum).append("\n");
+//                continue;
+//            }
+//
+//            int[] a1 = applyOp(a, n);
+//            long sum1 = 0;
+//            for (int val : a1) {
+//                sum1 += val;
+//            }
+//
+//            if (k == 1) {
+//                sb.append(sum1).append("\n");
+//                continue;
+//            }
+//
+//            int[] a2 = applyOp(a1, n);
+//
+//            if (Arrays.equals(a1, a2)) {
+//                sb.append(sum1).append("\n");
+//            } else {
+//                long sum2 = 0;
+//                for (int val : a2) {
+//                    sum2 += val;
+//                }
+//                if ((k - 1) % 2 == 0) {
+//                    sb.append(sum1).append("\n");
+//                } else {
+//                    sb.append(sum2).append("\n");
+//                }
+//            }
+//        }
+//        System.out.print(sb.toString());
+//        sc.close();
+//    }
+//
+//    private static int[] applyOp(int[] a, int n) {
+//        int[] counts = new int[n + 1];
+//        for (int x : a) {
+//            if (x < n + 1) {
+//                counts[x]++;
+//            }
+//        }
+//
+//        int mex = 0;
+//        while (mex < n + 1 && counts[mex] > 0) {
+//            mex++;
+//        }
+//
+//        int[] nextA = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            int val = a[i];
+//            boolean isUniqueAndSmall = (val < n + 1 && counts[val] == 1);
+//
+//            if (isUniqueAndSmall && val < mex) {
+//                nextA[i] = val;
+//            } else {
+//                nextA[i] = mex;
+//            }
+//        }
+//        return nextA;
+//    }
+//}
+
+
+
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.io.PrintWriter;
+//import java.util.ArrayList;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Queue;
+//import java.util.StringTokenizer;
+//
+//public class Main {
+//
+//    public static void main(String[] args) throws IOException {
+//        FastReader fs = new FastReader();
+//        PrintWriter pw = new PrintWriter(System.out);
+//        int t = fs.nextInt();
+//        while (t-- > 0) {
+//            solve(fs, pw);
+//        }
+//        pw.flush();
+//    }
+//
+//    public static void solve(FastReader fs, PrintWriter pw) throws IOException {
+//        int n = fs.nextInt();
+//        int m = fs.nextInt();
+//        int q = fs.nextInt();
+//
+//        List<Integer>[] adj = new ArrayList[n + 1];
+//        List<Integer>[] revAdj = new ArrayList[n + 1];
+//        for (int i = 1; i <= n; i++) {
+//            adj[i] = new ArrayList<>();
+//            revAdj[i] = new ArrayList<>();
+//        }
+//
+//        int[] outDegree = new int[n + 1];
+//        for (int i = 0; i < m; i++) {
+//            int u = fs.nextInt();
+//            int v = fs.nextInt();
+//            adj[u].add(v);
+//            revAdj[v].add(u);
+//            outDegree[u]++;
+//        }
+//
+//        boolean[] isRed = new boolean[n + 1];
+//        int[] goodChildren = new int[n + 1];
+//        int[] nonCryWinChildren = new int[n + 1];
+//        boolean[] isCryLoss = new boolean[n + 1];
+//
+//        for (int i = 1; i <= n; i++) {
+//            goodChildren[i] = outDegree[i];
+//        }
+//
+//        Queue<Integer> propagationQueue = new LinkedList<>();
+//
+//        for (int i = 0; i < q; i++) {
+//            int type = fs.nextInt();
+//            int u = fs.nextInt();
+//
+//            if (type == 1) {
+//                if (isRed[u]) {
+//                    continue;
+//                }
+//
+//                boolean wasGoodChild = !isRed[u] && nonCryWinChildren[u] == 0;
+//                isRed[u] = true;
+//
+//                if (wasGoodChild) {
+//                    for (int p : revAdj[u]) {
+//                        goodChildren[p]--;
+//                        if (!isRed[p] && outDegree[p] > 0 && goodChildren[p] == 0 && !isCryLoss[p]) {
+//                            isCryLoss[p] = true;
+//                            propagationQueue.add(p);
+//                        }
+//                    }
+//                }
+//
+//                if (!isCryLoss[u]) {
+//                    isCryLoss[u] = true;
+//                    propagationQueue.add(u);
+//                }
+//
+//                while (!propagationQueue.isEmpty()) {
+//                    int w = propagationQueue.poll();
+//                    for (int v : revAdj[w]) {
+//                        nonCryWinChildren[v]++;
+//                        if (!isRed[v] && nonCryWinChildren[v] == 1) {
+//                            for (int p : revAdj[v]) {
+//                                goodChildren[p]--;
+//                                if (!isRed[p] && outDegree[p] > 0 && goodChildren[p] == 0 && !isCryLoss[p]) {
+//                                    isCryLoss[p] = true;
+//                                    propagationQueue.add(p);
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                if (isCryLoss[u]) {
+//                    pw.println("NO");
+//                } else {
+//                    pw.println("YES");
+//                }
+//            }
+//        }
+//    }
+//
+//    static class FastReader {
+//        BufferedReader br;
+//        StringTokenizer st;
+//
+//        public FastReader() {
+//            br = new BufferedReader(new InputStreamReader(System.in));
+//        }
+//
+//        String next() {
+//            while (st == null || !st.hasMoreElements()) {
+//                try {
+//                    st = new StringTokenizer(br.readLine());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            return st.nextToken();
+//        }
+//
+//        int nextInt() {
+//            return Integer.parseInt(next());
+//        }
+//    }
+//}
+
+
+
+//import java.util.Arrays;
+//import java.util.Scanner;
+//
+//public class Main {
+//
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int t = sc.nextInt();
+//        StringBuilder sb = new StringBuilder();
+//        while (t-- > 0) {
+//            int n = sc.nextInt();
+//            long k = sc.nextLong();
+//            int[] a = new int[n];
+//            long initialSum = 0;
+//            for (int i = 0; i < n; i++) {
+//                a[i] = sc.nextInt();
+//                initialSum += a[i];
+//            }
+//
+//            if (k == 0) {
+//                sb.append(initialSum).append("\n");
+//                continue;
+//            }
+//
+//            boolean isP = true;
+//            boolean[] seen = new boolean[n];
+//            for (int x : a) {
+//                if (x >= n || seen[x]) {
+//                    isP = false;
+//                    break;
+//                }
+//                seen[x] = true;
+//            }
+//            if (isP) {
+//                for (int i = 0; i < n; i++) {
+//                    if (!seen[i]) {
+//                        isP = false;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            if (isP) {
+//                long sum = (long) n * (n - 1) / 2;
+//                sb.append(sum).append("\n");
+//                continue;
+//            }
+//
+//            int[] a1 = applyOp(a, n);
+//            long sum1 = 0;
+//            for (int val : a1) sum1 += val;
+//            if (k == 1) {
+//                sb.append(sum1).append("\n");
+//                continue;
+//            }
+//
+//            int[] a2 = applyOp(a1, n);
+//            long sum2 = 0;
+//            for (int val : a2) sum2 += val;
+//            if (k == 2) {
+//                sb.append(sum2).append("\n");
+//                continue;
+//            }
+//
+//            if (Arrays.equals(a1, a2)) {
+//                sb.append(sum1).append("\n");
+//            } else {
+//                int[] a3 = applyOp(a2, n);
+//                if (Arrays.equals(a2, a3)) {
+//                    sb.append(sum2).append("\n");
+//                } else {
+//                    long sum3 = 0;
+//                    for(int val : a3) sum3 += val;
+//                    long rem_k = k - 2;
+//                    if (rem_k % 2 == 1) {
+//                        sb.append(sum3).append("\n");
+//                    } else {
+//                        sb.append(sum2).append("\n");
+//                    }
+//                }
+//            }
+//        }
+//        System.out.print(sb.toString());
+//        sc.close();
+//    }
+//
+//    private static int[] applyOp(int[] a, int n) {
+//        int[] counts = new int[n + 1];
+//        for (int x : a) {
+//            if (x <= n) {
+//                counts[x]++;
+//            }
+//        }
+//
+//        int mex = 0;
+//        while (mex <= n && counts[mex] > 0) {
+//            mex++;
+//        }
+//
+//        int[] nextA = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            int val = a[i];
+//            if ((val <= n && counts[val] > 1) || val >= mex) {
+//                nextA[i] = mex;
+//            } else {
+//                nextA[i] = val;
+//            }
+//        }
+//        return nextA;
+//    }
+//}
+
+
+
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Main {
-    public static void bubbleSort(int[] arr, int n) {
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1 - i; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+
+    static long[] tree;
+    static int valueRange;
+    static final long SENTINEL = -1;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        PrintWriter pw = new PrintWriter(System.out);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            solve(sc, pw);
+        }
+        sc.close();
+        pw.flush();
+    }
+
+    public static void solve(Scanner sc, PrintWriter pw) {
+        int n = sc.nextInt();
+        int[] a = new int[n];
+        int[] b = new int[n];
+        int maxVal = 0;
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+            maxVal = Math.max(maxVal, a[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            b[i] = sc.nextInt();
+            maxVal = Math.max(maxVal, b[i]);
+        }
+
+        valueRange = maxVal + 1;
+        tree = new long[4 * valueRange];
+        Arrays.fill(tree, SENTINEL);
+
+        long totalSum = 0;
+
+        for (int i = 0; i < n; i++) {
+            long p_ge = query(1, 0, valueRange - 1, a[i], valueRange - 1);
+
+            long currentContribution = 0;
+
+            if (a[i] == b[i]) {
+                long num_l = i - (p_ge + 1) + 1;
+                currentContribution += num_l * (long)(n - i);
+            }
+
+            if (p_ge != -1) {
+                long p_b = query(1, 0, valueRange - 1, b[i], valueRange - 1);
+                if (p_b != -1) {
+                    long num_l = Math.min(p_ge, p_b) + 1;
+                    currentContribution += num_l * (long)(n - i);
                 }
             }
+
+            totalSum += currentContribution;
+            update(1, 0, valueRange - 1, a[i], i);
         }
+
+        pw.println(totalSum);
     }
-        public static void main (String[]args){
-            Scanner sc = new Scanner(System.in);
-            int n = sc.nextInt();
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
-            bubbleSort(arr, n);
-            for (int i = 0; i < n; i++) System.out.print(arr[i] + " ");
+
+    public static void update(int node, int start, int end, int idx, int val) {
+        if (start == end) {
+            tree[node] = Math.max(tree[node], (long)val);
+            return;
         }
+        int mid = start + (end - start) / 2;
+        if (start <= idx && idx <= mid) {
+            update(2 * node, start, mid, idx, val);
+        } else {
+            update(2 * node + 1, mid + 1, end, idx, val);
+        }
+        tree[node] = Math.max(tree[2 * node], tree[2 * node + 1]);
+    }
+
+    public static long query(int node, int start, int end, int l, int r) {
+        if (r < start || end < l || l > r) {
+            return SENTINEL;
+        }
+        if (l <= start && end <= r) {
+            return tree[node];
+        }
+        int mid = start + (end - start) / 2;
+        long p1 = query(2 * node, start, mid, l, r);
+        long p2 = query(2 * node + 1, mid + 1, end, l, r);
+        return Math.max(p1, p2);
+    }
 }
