@@ -3936,95 +3936,118 @@ import java.io.PrintWriter;
 
 
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Scanner;
+//import java.util.Arrays;
+//import java.util.Scanner;
+//
+//public class Main {
+//
+//    static long[] tree;
+//    static int valueRange;
+//    static final long SENTINEL = -1;
+//
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        PrintWriter pw = new PrintWriter(System.out);
+//        int t = sc.nextInt();
+//        while (t-- > 0) {
+//            solve(sc, pw);
+//        }
+//        sc.close();
+//        pw.flush();
+//    }
+//
+//    public static void solve(Scanner sc, PrintWriter pw) {
+//        int n = sc.nextInt();
+//        int[] a = new int[n];
+//        int[] b = new int[n];
+//        int maxVal = 0;
+//        for (int i = 0; i < n; i++) {
+//            a[i] = sc.nextInt();
+//            maxVal = Math.max(maxVal, a[i]);
+//        }
+//        for (int i = 0; i < n; i++) {
+//            b[i] = sc.nextInt();
+//            maxVal = Math.max(maxVal, b[i]);
+//        }
+//
+//        valueRange = maxVal + 1;
+//        tree = new long[4 * valueRange];
+//        Arrays.fill(tree, SENTINEL);
+//
+//        long totalSum = 0;
+//
+//        for (int i = 0; i < n; i++) {
+//            long p_ge = query(1, 0, valueRange - 1, a[i], valueRange - 1);
+//
+//            long currentContribution = 0;
+//
+//            if (a[i] == b[i]) {
+//                long num_l = i - (p_ge + 1) + 1;
+//                currentContribution += num_l * (long)(n - i);
+//            }
+//
+//            if (p_ge != -1) {
+//                long p_b = query(1, 0, valueRange - 1, b[i], valueRange - 1);
+//                if (p_b != -1) {
+//                    long num_l = Math.min(p_ge, p_b) + 1;
+//                    currentContribution += num_l * (long)(n - i);
+//                }
+//            }
+//
+//            totalSum += currentContribution;
+//            update(1, 0, valueRange - 1, a[i], i);
+//        }
+//
+//        pw.println(totalSum);
+//    }
+//
+//    public static void update(int node, int start, int end, int idx, int val) {
+//        if (start == end) {
+//            tree[node] = Math.max(tree[node], (long)val);
+//            return;
+//        }
+//        int mid = start + (end - start) / 2;
+//        if (start <= idx && idx <= mid) {
+//            update(2 * node, start, mid, idx, val);
+//        } else {
+//            update(2 * node + 1, mid + 1, end, idx, val);
+//        }
+//        tree[node] = Math.max(tree[2 * node], tree[2 * node + 1]);
+//    }
+//
+//    public static long query(int node, int start, int end, int l, int r) {
+//        if (r < start || end < l || l > r) {
+//            return SENTINEL;
+//        }
+//        if (l <= start && end <= r) {
+//            return tree[node];
+//        }
+//        int mid = start + (end - start) / 2;
+//        long p1 = query(2 * node, start, mid, l, r);
+//        long p2 = query(2 * node + 1, mid + 1, end, l, r);
+//        return Math.max(p1, p2);
+//    }
+//}
 
+
+
+
+import java.util.*;
 public class Main {
-
-    static long[] tree;
-    static int valueRange;
-    static final long SENTINEL = -1;
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        PrintWriter pw = new PrintWriter(System.out);
         int t = sc.nextInt();
-        while (t-- > 0) {
-            solve(sc, pw);
+        int enter=0;
+        int exit=0;
+        int an = 0;
+        while(t-- > 0){
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            exit = exit-a;
+            enter = exit + b;
+            exit=enter;
+            if(an<enter) an=enter;
         }
-        sc.close();
-        pw.flush();
-    }
-
-    public static void solve(Scanner sc, PrintWriter pw) {
-        int n = sc.nextInt();
-        int[] a = new int[n];
-        int[] b = new int[n];
-        int maxVal = 0;
-        for (int i = 0; i < n; i++) {
-            a[i] = sc.nextInt();
-            maxVal = Math.max(maxVal, a[i]);
-        }
-        for (int i = 0; i < n; i++) {
-            b[i] = sc.nextInt();
-            maxVal = Math.max(maxVal, b[i]);
-        }
-
-        valueRange = maxVal + 1;
-        tree = new long[4 * valueRange];
-        Arrays.fill(tree, SENTINEL);
-
-        long totalSum = 0;
-
-        for (int i = 0; i < n; i++) {
-            long p_ge = query(1, 0, valueRange - 1, a[i], valueRange - 1);
-
-            long currentContribution = 0;
-
-            if (a[i] == b[i]) {
-                long num_l = i - (p_ge + 1) + 1;
-                currentContribution += num_l * (long)(n - i);
-            }
-
-            if (p_ge != -1) {
-                long p_b = query(1, 0, valueRange - 1, b[i], valueRange - 1);
-                if (p_b != -1) {
-                    long num_l = Math.min(p_ge, p_b) + 1;
-                    currentContribution += num_l * (long)(n - i);
-                }
-            }
-
-            totalSum += currentContribution;
-            update(1, 0, valueRange - 1, a[i], i);
-        }
-
-        pw.println(totalSum);
-    }
-
-    public static void update(int node, int start, int end, int idx, int val) {
-        if (start == end) {
-            tree[node] = Math.max(tree[node], (long)val);
-            return;
-        }
-        int mid = start + (end - start) / 2;
-        if (start <= idx && idx <= mid) {
-            update(2 * node, start, mid, idx, val);
-        } else {
-            update(2 * node + 1, mid + 1, end, idx, val);
-        }
-        tree[node] = Math.max(tree[2 * node], tree[2 * node + 1]);
-    }
-
-    public static long query(int node, int start, int end, int l, int r) {
-        if (r < start || end < l || l > r) {
-            return SENTINEL;
-        }
-        if (l <= start && end <= r) {
-            return tree[node];
-        }
-        int mid = start + (end - start) / 2;
-        long p1 = query(2 * node, start, mid, l, r);
-        long p2 = query(2 * node + 1, mid + 1, end, l, r);
-        return Math.max(p1, p2);
+        System.out.println(an);
     }
 }
