@@ -14,7 +14,6 @@ public class AMagnets {
                 ans = curr;
             }
         }
-
         System.out.println(count);
     }
 }
