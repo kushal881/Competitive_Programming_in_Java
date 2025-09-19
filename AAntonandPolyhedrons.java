@@ -13,6 +13,6 @@ public class AAntonandPolyhedrons {
             else sum+=20;
             n--;
         }
-        System.out.println(sum);
+        System.out.print(sum);
     }
 }
