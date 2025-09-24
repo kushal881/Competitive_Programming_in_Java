@@ -14,7 +14,6 @@ public class AVanyaandCubes {
             cubesUsed += needed;
             height++;
         }
-
         System.out.println(height);
     }
 }
