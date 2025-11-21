@@ -1,23 +1,17 @@
-import java.io.*;
 import java.util.*;
 
 public class AYesYes {
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int t = Integer.parseInt(br.readLine().trim());
-        StringBuilder out = new StringBuilder();
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
 
-        StringBuilder base = new StringBuilder();
-        for (int i = 0; i < 100; i++) base.append("Yes");
-
-        String big = base.toString();
+        String base = "";
+        while (base.length() < 200) base += "Yes";
 
         while (t-- > 0) {
-            String s = br.readLine().trim();
-            if (big.contains(s)) out.append("YES\n");
-            else out.append("NO\n");
+            String s = sc.next();
+            if (base.contains(s)) System.out.println("YES");
+            else System.out.println("NO");
         }
-
-        System.out.print(out.toString());
     }
 }
